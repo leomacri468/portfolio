@@ -1,0 +1,1271 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>yumi — Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ground: #f6f6fb;
+        --panel: #fff;
+        --ink: #1c1a33;
+        --mute: #1c1a33b3;
+        --line: #1c1a3322;
+        --pu: #6b4bd6;
+        --bl: #2563d9;
+        --gr: #11865a;
+        --rd: #d63e4d;
+        --m: clamp(16px, 3.2vw, 40px);
+        --out: cubic-bezier(0.23, 1, 0.32, 1);
+        --disp:
+          "Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+        --mono:
+          "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,
+          monospace;
+        --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        box-sizing: border-box;
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --ground: #0e0f1f;
+          --panel: #15162b;
+          --ink: #ecebfa;
+          --mute: #ecebfab3;
+          --line: #ecebfa24;
+          --pu: #a78bfa;
+          --bl: #6ea8ff;
+          --gr: #5fd6a0;
+          --rd: #ff7b87;
+        }
+      }
+      :root[data-theme="dark"] {
+        --ground: #0e0f1f;
+        --panel: #15162b;
+        --ink: #ecebfa;
+        --mute: #ecebfab3;
+        --line: #ecebfa24;
+        --pu: #a78bfa;
+        --bl: #6ea8ff;
+        --gr: #5fd6a0;
+        --rd: #ff7b87;
+      }
+      html {
+        scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 70px);
+        scroll-behavior: smooth;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: inherit;
+      }
+      body {
+        margin: 0;
+        background: var(--ground);
+        color: var(--ink);
+        font: 400 18px/1.55 var(--sans);
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0 0 auto;
+        height: env(safe-area-inset-top, 0px);
+        background: var(--ground);
+        z-index: 30;
+      }
+      a {
+        color: inherit;
+      }
+      #bar {
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: env(safe-area-inset-top, 0px);
+        height: 3px;
+        z-index: 40;
+        background: linear-gradient(
+          90deg,
+          var(--pu),
+          var(--bl),
+          var(--gr),
+          var(--rd)
+        );
+        transform-origin: left;
+        transform: scaleX(0);
+      }
+      nav {
+        position: sticky;
+        top: env(safe-area-inset-top, 0px);
+        z-index: 20;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        padding: 14px var(--m);
+        background: color-mix(in srgb, var(--ground) 78%, transparent);
+        -webkit-backdrop-filter: blur(16px) saturate(1.4);
+        backdrop-filter: blur(16px) saturate(1.4);
+        border-bottom: 1px solid var(--line);
+      }
+      nav .w {
+        font: 700 18px/1 var(--disp);
+        text-decoration: none;
+        letter-spacing: -0.02em;
+      }
+      nav .w b {
+        color: var(--pu);
+      }
+      nav div {
+        display: flex;
+        gap: clamp(12px, 2.4vw, 26px);
+        align-items: center;
+        font: 500 13px/1 var(--mono);
+      }
+      nav div a {
+        text-decoration: none;
+        color: var(--mute);
+        transition: color 0.15s ease;
+      }
+      .lang {
+        background: none;
+        border: 1px solid var(--ink);
+        color: var(--ink);
+        font: 500 12px/1 var(--mono);
+        padding: 8px 11px;
+        cursor: pointer;
+        border-radius: 8px;
+        transition:
+          transform 0.1s ease-out,
+          background-color 0.15s ease,
+          color 0.15s ease;
+      }
+      .lang:active,
+      .btn:active {
+        transform: scale(0.97);
+      }
+      .rv {
+        opacity: 0;
+        transform: translateY(26px);
+        transition:
+          opacity 0.7s var(--out),
+          transform 0.7s var(--out);
+        transition-delay: calc(var(--d, 0) * 70ms);
+      }
+      .rv.in {
+        opacity: 1;
+        transform: none;
+      }
+      section {
+        padding: clamp(72px, 10vw, 150px) var(--m);
+      }
+      .eb {
+        font: 500 14px/1 var(--mono);
+        color: var(--gr);
+        margin: 0 0 22px;
+      }
+      h1 {
+        font: 700 clamp(96px, 24vw, 360px)/0.86 var(--disp);
+        letter-spacing: -0.05em;
+        margin: 0;
+      }
+      h1 span {
+        display: inline-block;
+        opacity: 0;
+        transform: translateY(45%);
+        animation: up 0.9s var(--out) forwards;
+        animation-delay: calc(var(--i) * 110ms + 100ms);
+      }
+      @keyframes up {
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      .hero {
+        display: grid;
+        gap: clamp(32px, 5vw, 64px);
+        grid-template-columns: 1fr;
+        align-items: center;
+        min-height: calc(100svh - 60px);
+        padding-top: clamp(32px, 6vw, 80px);
+      }
+      .lead {
+        font: 500 clamp(22px, 2.6vw, 36px)/1.15 var(--disp);
+        letter-spacing: -0.025em;
+        margin: 28px 0 0;
+        max-width: 20em;
+      }
+      .pt {
+        color: var(--pu);
+      }
+      .lead em {
+        font-style: normal;
+        color: var(--pu);
+      }
+      .sub {
+        color: var(--mute);
+        max-width: 34em;
+        margin: 18px 0 0;
+      }
+      .cta {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 30px;
+      }
+      .btn {
+        display: inline-block;
+        padding: 14px 22px;
+        border-radius: 10px;
+        text-decoration: none;
+        font: 500 15px/1 var(--mono);
+        background: var(--pu);
+        color: #fff;
+        transition:
+          transform 0.1s ease-out,
+          opacity 0.15s ease;
+      }
+      .btn.o {
+        background: none;
+        color: var(--ink);
+        box-shadow: inset 0 0 0 1px var(--ink);
+      }
+      .win {
+        border-radius: 16px;
+        background: #12132a;
+        color: #ecebfa;
+        box-shadow:
+          0 40px 80px -40px #1c1a3399,
+          0 0 0 1px #ffffff14;
+        overflow: hidden;
+      }
+      .win .tb {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        padding: 12px 16px;
+        border-bottom: 1px solid #ffffff14;
+        font: 400 12px/1 var(--mono);
+        color: #ecebfa99;
+      }
+      .win .tb i {
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+      }
+      .win .tb i:nth-child(1) {
+        background: #ff7b87;
+      }
+      .win .tb i:nth-child(2) {
+        background: #f5c76b;
+      }
+      .win .tb i:nth-child(3) {
+        background: #5fd6a0;
+      }
+      .win .tb span {
+        margin-left: 10px;
+      }
+      pre {
+        margin: 0;
+        padding: clamp(16px, 2.4vw, 28px);
+        font: 400 clamp(12.5px, 1.35vw, 16px)/1.7 var(--mono);
+        white-space: pre-wrap;
+        min-height: 15.5em;
+      }
+      .k {
+        color: #a78bfa;
+      }
+      .p {
+        color: #6ea8ff;
+      }
+      .s {
+        color: #5fd6a0;
+      }
+      .r {
+        color: #ff7b87;
+      }
+      .d {
+        color: #ecebfa99;
+      }
+      .cur {
+        display: inline-block;
+        width: 0.55em;
+        height: 1.1em;
+        margin-left: 2px;
+        vertical-align: -0.2em;
+        background: #a78bfa;
+        animation: bl 1s steps(1) infinite;
+      }
+      @keyframes bl {
+        50% {
+          opacity: 0;
+        }
+      }
+      h2.t {
+        font: 700 clamp(36px, 6.4vw, 96px)/0.98 var(--disp);
+        letter-spacing: -0.045em;
+        margin: 0 0 clamp(28px, 4vw, 56px);
+      }
+      h2.t em {
+        font-style: normal;
+        color: var(--pu);
+      }
+      .file {
+        font: 500 13px/1 var(--mono);
+        color: var(--bl);
+        margin: 0 0 18px;
+      }
+      .about {
+        max-width: 34em;
+        font-size: clamp(19px, 1.8vw, 25px);
+        line-height: 1.45;
+        margin: 0;
+      }
+      .svc {
+        display: grid;
+        gap: clamp(24px, 3vw, 40px) var(--m);
+        grid-template-columns: 1fr;
+        margin-top: clamp(32px, 5vw, 64px);
+      }
+      .sv {
+        border-top: 2px solid var(--c);
+        padding-top: 16px;
+      }
+      .sv small {
+        font: 500 13px/1 var(--mono);
+        color: var(--c);
+      }
+      .sv h4 {
+        font: 700 clamp(20px, 2vw, 26px)/1.1 var(--disp);
+        letter-spacing: -0.02em;
+        margin: 10px 0 8px;
+      }
+      .sv p {
+        margin: 0;
+        color: var(--mute);
+        font-size: 16px;
+      }
+      .pcs {
+        display: block;
+      }
+      .pc {
+        border-radius: 24px;
+        padding: clamp(22px, 3.4vw, 48px);
+        margin-bottom: var(--m);
+        transition: transform 0.35s var(--out);
+      }
+      .pc.a {
+        background: #e3f1e8;
+        color: #12352a;
+        --k: #1c9a6c;
+        box-shadow: 0 30px 60px -40px #12352a88;
+      }
+      .pc.b {
+        background: #2a1220;
+        color: #f4e9e1;
+        --k: #e8b79b;
+        box-shadow: 0 30px 60px -40px #000;
+      }
+      .pc .tb {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font: 500 13px/1 var(--mono);
+        opacity: 0.75;
+      }
+      .pc h3 {
+        font: 700 clamp(36px, 6.6vw, 104px)/0.95 var(--disp);
+        letter-spacing: -0.045em;
+        margin: clamp(20px, 3vw, 40px) 0 0;
+      }
+      .pc .g {
+        display: grid;
+        gap: var(--m);
+        grid-template-columns: 1fr;
+        margin-top: clamp(24px, 4vw, 48px);
+      }
+      .pc p {
+        margin: 0;
+        font-size: clamp(17px, 1.5vw, 20px);
+        line-height: 1.45;
+        max-width: 26em;
+      }
+      .tg {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 18px;
+      }
+      .tg span {
+        font: 500 12px/1 var(--mono);
+        padding: 8px 12px;
+        border-radius: 8px;
+        box-shadow: inset 0 0 0 1px currentColor;
+        opacity: 0.9;
+      }
+      .tg span.hl {
+        background: var(--k);
+        color: #fff;
+        box-shadow: none;
+      }
+      .go {
+        display: inline-flex;
+        gap: 8px;
+        margin-top: 22px;
+        font: 500 15px/1 var(--mono);
+        text-decoration: none;
+        align-items: center;
+        padding: 13px 18px;
+        border-radius: 10px;
+        background: currentColor;
+      }
+      .go b {
+        color: var(--bg, #fff);
+        font-weight: 500;
+      }
+      .pc.a .go {
+        background: #12352a;
+      }
+      .pc.a .go b {
+        color: #e3f1e8;
+      }
+      .pc.b .go {
+        background: #e8b79b;
+      }
+      .pc.b .go b {
+        color: #2a1220;
+      }
+      .ft {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .ft li {
+        position: relative;
+        padding: 13px 0 13px 26px;
+        border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+      }
+      .ft li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 21px;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--k);
+      }
+      .chips {
+        display: grid;
+        gap: var(--m);
+        grid-template-columns: 1fr;
+      }
+      .box {
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: clamp(20px, 3vw, 32px);
+        background: var(--panel);
+      }
+      .box h4 {
+        font: 500 13px/1 var(--mono);
+        color: var(--mute);
+        margin: 0 0 16px;
+      }
+      .box ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .box li {
+        font: 500 15px/1 var(--mono);
+        padding: 10px 14px;
+        border-radius: 8px;
+        background: var(--line);
+        display: flex;
+        align-items: center;
+        gap: 9px;
+      }
+      .box li::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--c, var(--pu));
+      }
+      .box li:nth-child(1) {
+        --c: var(--bl);
+      }
+      .box li:nth-child(2) {
+        --c: var(--rd);
+      }
+      .box li:nth-child(3) {
+        --c: var(--gr);
+      }
+      .box li:nth-child(4) {
+        --c: var(--pu);
+      }
+      .box.st li:nth-child(1) {
+        --c: var(--gr);
+      }
+      .box.st li:nth-child(2) {
+        --c: var(--bl);
+      }
+      .git {
+        position: relative;
+        margin-top: clamp(40px, 6vw, 80px);
+        padding-left: clamp(36px, 6vw, 72px);
+      }
+      .git .ln {
+        position: absolute;
+        left: 8px;
+        top: 6px;
+        bottom: 6px;
+        width: 2px;
+        background: var(--line);
+      }
+      .git .ln i {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(var(--bl), var(--pu), var(--gr));
+        transform-origin: top;
+        transform: scaleY(var(--p, 0));
+      }
+      .nd {
+        position: relative;
+        padding-bottom: clamp(36px, 5vw, 64px);
+      }
+      .nd::before {
+        content: "";
+        position: absolute;
+        left: calc(-1 * clamp(36px, 6vw, 72px) + 1px);
+        top: 6px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: var(--ground);
+        box-shadow: inset 0 0 0 2px var(--line);
+        transition:
+          box-shadow 0.4s var(--out),
+          background-color 0.4s var(--out);
+      }
+      .nd.in::before {
+        background: var(--c);
+        box-shadow: 0 0 0 5px color-mix(in srgb, var(--c) 22%, transparent);
+      }
+      .nd code {
+        font: 500 13px/1 var(--mono);
+        color: var(--c);
+      }
+      .nd h4 {
+        font: 700 clamp(28px, 4.4vw, 60px)/1 var(--disp);
+        letter-spacing: -0.04em;
+        margin: 8px 0 8px;
+      }
+      .nd p {
+        margin: 0;
+        color: var(--mute);
+        max-width: 30em;
+      }
+      .contact .term {
+        max-width: 760px;
+        border-radius: 16px;
+        background: #12132a;
+        color: #ecebfa;
+        padding: clamp(20px, 3vw, 36px);
+        font: 400 clamp(14px, 1.6vw, 19px)/1.9 var(--mono);
+        box-shadow: 0 40px 80px -40px #1c1a3399;
+      }
+      .term a {
+        text-decoration: none;
+        background: linear-gradient(currentColor, currentColor) 0 100%/0 1px
+          no-repeat;
+        transition: background-size 0.3s var(--out);
+      }
+      .term .m {
+        color: #6ea8ff;
+        overflow-wrap: anywhere;
+      }
+      .contact h2 {
+        font: 700 clamp(40px, 8.6vw, 136px)/0.95 var(--disp);
+        letter-spacing: -0.05em;
+        margin: 0 0 clamp(24px, 4vw, 48px);
+      }
+      .contact .sub {
+        margin-top: 28px;
+      }
+      footer {
+        padding: 0 var(--m) var(--m);
+        color: var(--mute);
+        font: 400 13px/1.4 var(--mono);
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      @media (hover: hover) and (pointer: fine) {
+        nav div a:hover {
+          color: var(--ink);
+        }
+        .btn:hover,
+        .go:hover {
+          opacity: 0.88;
+        }
+        .lang:hover {
+          background: var(--ink);
+          color: var(--ground);
+        }
+        .term a:hover {
+          background-size: 100% 1px;
+        }
+        .pc:hover {
+          transform: translateY(-4px);
+        }
+      }
+      @media (min-width: 640px) {
+        .svc {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (min-width: 860px) {
+        .hero {
+          grid-template-columns: 7fr 6fr;
+        }
+        .pc .g {
+          grid-template-columns: 6fr 6fr;
+        }
+        .chips {
+          grid-template-columns: 7fr 5fr;
+        }
+      }
+      @media (min-width: 1000px) {
+        .svc {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+      @media (min-width: 860px) and (min-height: 720px) {
+        .pc {
+          position: sticky;
+          top: calc(env(safe-area-inset-top, 0px) + 84px + var(--i) * 20px);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        h1 span {
+          animation: none;
+          opacity: 1;
+          transform: none;
+        }
+        .rv {
+          transform: none;
+          transition: opacity 0.3s ease;
+        }
+        .cur {
+          animation: none;
+        }
+        .pc {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="bar" aria-hidden="true"></div>
+    <nav>
+      <a class="w" href="#top">yumi<b>.dev</b></a>
+      <div>
+        <a href="#sobre" data-i="n1">sobre</a
+        ><a href="#projetos" data-i="n2">projetos</a
+        ><a href="#stack" data-i="n3">stack</a
+        ><a href="#contato" data-i="n4">contato</a>
+        <button
+          class="lang"
+          id="lang"
+          type="button"
+          aria-label="Português / English"
+        >
+          EN
+        </button>
+      </div>
+    </nav>
+    <main id="top">
+      <section class="hero">
+        <div>
+          <p class="eb" data-i="eb">// oi, eu sou</p>
+          <h1 aria-label="yumi">
+            <span style="--i: 0">yumi</span
+            ><span class="pt" style="--i: 1">.</span>
+          </h1>
+          <p class="lead rv" style="--d: 5" data-i="lead">
+            Front-end hoje. <em>Full-stack amanhã.</em>
+          </p>
+          <p class="sub rv" style="--d: 6" data-i="sub">
+            Construo interfaces cuidadosas com TypeScript, JavaScript, HTML e
+            CSS, e estudo Python e PHP para chegar ao back-end.
+          </p>
+          <div class="cta rv" style="--d: 7">
+            <a class="btn" href="#projetos" data-i="c1">ver projetos</a
+            ><a class="btn o" href="#contato" data-i="c2">falar comigo</a>
+          </div>
+        </div>
+        <div class="win rv" style="--d: 4">
+          <div class="tb"><i></i><i></i><i></i><span>yumi.ts</span></div>
+          <pre
+            id="code"
+            aria-label="const dev = { alias: yumi, role: front-end, stack: TypeScript, JavaScript, HTML, CSS, learning: Python, PHP, next: full-stack }"
+          ></pre>
+        </div>
+      </section>
+
+      <section id="sobre">
+        <p class="file rv">// sobre.ts</p>
+        <h2 class="t rv" data-i="at">
+          Sites para quem <em>cuida de pessoas.</em>
+        </h2>
+        <p class="about rv" data-i="ap">
+          Sou a yumi, desenvolvedora front-end no começo da carreira: pego um
+          layout e o transformo em uma interface que funciona bem em qualquer
+          tela. Escrevo TypeScript e JavaScript no dia a dia, cuido de HTML e
+          CSS semânticos e estudo Python e PHP para entender o que acontece do
+          outro lado da tela.
+        </p>
+        <div class="svc">
+          <div class="sv rv" style="--c: var(--bl)">
+            <small>fn 01</small>
+            <h4 data-i="s1t">Interfaces responsivas</h4>
+            <p data-i="s1p">
+              Layouts que se adaptam do celular ao desktop, com CSS moderno e
+              código limpo.
+            </p>
+          </div>
+          <div class="sv rv" style="--c: var(--gr); --d: 1">
+            <small>fn 02</small>
+            <h4 data-i="s2t">Acessibilidade</h4>
+            <p data-i="s2p">
+              HTML semântico, contraste adequado e navegação por teclado.
+            </p>
+          </div>
+          <div class="sv rv" style="--c: var(--pu); --d: 2">
+            <small>fn 03</small>
+            <h4 data-i="s3t">Animações com propósito</h4>
+            <p data-i="s3p">
+              Transições e microinterações que dão retorno ao usuário sem
+              atrapalhar.
+            </p>
+          </div>
+          <div class="sv rv" style="--c: var(--rd); --d: 3">
+            <small>fn 04</small>
+            <h4 data-i="s4t">TypeScript e JavaScript</h4>
+            <p data-i="s4p">
+              Lógica de interface tipada e organizada, do formulário ao estado
+              da página.
+            </p>
+          </div>
+        </div>
+        <h2
+          class="t rv"
+          style="margin: clamp(72px, 9vw, 128px) 0 0"
+          data-i="wt"
+        >
+          Como <em>trabalho.</em>
+        </h2>
+        <div class="svc">
+          <div class="sv rv" style="--c: var(--bl)">
+            <small>01</small>
+            <h4 data-i="w1t">Entender</h4>
+            <p data-i="w1p">
+              Converso sobre objetivo, público e prazo antes de escrever código.
+            </p>
+          </div>
+          <div class="sv rv" style="--c: var(--pu); --d: 1">
+            <small>02</small>
+            <h4 data-i="w2t">Estruturar</h4>
+            <p data-i="w2p">
+              Defino conteúdo, hierarquia e layout, começando pelo celular.
+            </p>
+          </div>
+          <div class="sv rv" style="--c: var(--gr); --d: 2">
+            <small>03</small>
+            <h4 data-i="w3t">Construir</h4>
+            <p data-i="w3p">
+              Desenvolvo por componentes e testo em telas e navegadores
+              diferentes.
+            </p>
+          </div>
+          <div class="sv rv" style="--c: var(--rd); --d: 3">
+            <small>04</small>
+            <h4 data-i="w4t">Entregar</h4>
+            <p data-i="w4p">Publico, reviso com você e ajusto os detalhes.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="projetos">
+        <p class="file rv">// projetos.tsx</p>
+        <h2 class="t rv" data-i="pt">Projetos</h2>
+        <div class="pcs">
+          <article class="pc a" style="--i: 0">
+            <div class="tb"><span>espaco-vital.tsx</span><span>01</span></div>
+            <h3>Espaço Vital Pilates</h3>
+            <div class="g">
+              <div>
+                <p data-i="p1d">
+                  Projeto de estudo feito para treinar e preencher meu
+                  portfólio. Simula o site de um estúdio de Pilates e
+                  Treinamento Funcional com turmas de até 4 alunos: modalidades,
+                  instrutoras, seis planos e agendamento de aula experimental.
+                </p>
+                <div class="tg">
+                  <span class="hl" data-i="p1e">Projeto de estudo</span
+                  ><span>Next.js</span><span data-i="p1t">Página única</span>
+                </div>
+                <a
+                  class="go"
+                  href="https://leomacri468.github.io/espaco-vital/"
+                  target="_blank"
+                  rel="noopener"
+                  ><b data-i="ver">Ver o site</b><b>↗</b></a
+                >
+              </div>
+              <ul class="ft">
+                <li data-i="f1">
+                  Seções: sobre, modalidades, instrutoras, planos e endereço
+                </li>
+                <li data-i="f2">Seis planos organizados em três categorias</li>
+                <li data-i="f3">
+                  Chamada constante para agendar a aula experimental
+                </li>
+                <li data-i="f4">
+                  Turmas reduzidas como argumento central da página
+                </li>
+              </ul>
+            </div>
+          </article>
+          <article class="pc b" style="--i: 1">
+            <div class="tb">
+              <span>corradi-advocacia.html</span><span>02</span>
+            </div>
+            <h3>Vanessa Corradi Advocacia</h3>
+            <div class="g">
+              <div>
+                <p data-i="p2d">
+                  Site institucional para uma advogada que defende os direitos
+                  das mulheres. Um manifesto em primeira pessoa, os diferenciais
+                  do atendimento e um caminho curto até o WhatsApp.
+                </p>
+                <div class="tg">
+                  <span data-i="p1t">Página única</span
+                  ><span data-i="p2t">Institucional</span><span>WhatsApp</span>
+                </div>
+                <a
+                  class="go"
+                  href="https://leomacri468.github.io/corradi-advocacia/"
+                  target="_blank"
+                  rel="noopener"
+                  ><b data-i="ver">Ver o site</b><b>↗</b></a
+                >
+              </div>
+              <ul class="ft">
+                <li data-i="g1">
+                  Manifesto da advogada em destaque na abertura
+                </li>
+                <li data-i="g2">
+                  Diferenciais do atendimento em linguagem simples
+                </li>
+                <li data-i="g3">
+                  Contato direto por WhatsApp, e-mail e Instagram
+                </li>
+                <li data-i="g4">
+                  Tom acolhedor e sóbrio, com poucos elementos na tela
+                </li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="stack">
+        <p class="file rv">// stack.ts</p>
+        <h2 class="t rv" data-i="st">Minha <em>stack.</em></h2>
+        <div class="chips">
+          <div class="box rv">
+            <h4 data-i="sh">// uso hoje</h4>
+            <ul>
+              <li>TypeScript</li>
+              <li>JavaScript</li>
+              <li>HTML</li>
+              <li>CSS</li>
+            </ul>
+          </div>
+          <div class="box st rv" style="--d: 1">
+            <h4 data-i="ss">// estudando</h4>
+            <ul>
+              <li>Python</li>
+              <li>PHP</li>
+            </ul>
+          </div>
+        </div>
+        <div class="git" id="git">
+          <div class="ln"><i></i></div>
+          <div class="nd rv" style="--c: var(--bl)">
+            <code>main</code>
+            <h4>Front-end</h4>
+            <p data-i="t1p">
+              Interfaces responsivas, acessíveis e com movimento usado com
+              critério.
+            </p>
+          </div>
+          <div class="nd rv" style="--c: var(--pu)">
+            <code>feat/back-end</code>
+            <h4>Back-end</h4>
+            <p data-i="t2p">
+              Python e PHP: APIs, bancos de dados e a lógica por trás da tela.
+            </p>
+          </div>
+          <div class="nd rv" style="--c: var(--gr)">
+            <code>merge → full-stack</code>
+            <h4>Full-stack</h4>
+            <p data-i="t3p">
+              Ligar as duas pontas e entregar produtos completos, do clique ao
+              banco de dados.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="contact" id="contato">
+        <p class="file rv">// contato.ts</p>
+        <h2 class="rv" data-i="ct">Vamos conversar.</h2>
+        <div class="term rv" style="--d: 1">
+          <div><span class="d">$</span> whoami <span class="s">yumi</span></div>
+          <div>
+            <span class="d">$</span> email
+            <a class="m" href="mailto:leonardomacri2@gmail.com"
+              >leonardomacri2@gmail.com</a
+            >
+          </div>
+          <div>
+            <span class="d">$</span> linkedin
+            <a
+              class="m"
+              href="https://www.linkedin.com/in/leocorradi/"
+              target="_blank"
+              rel="noopener"
+              >/in/leocorradi ↗</a
+            >
+          </div>
+          <div>
+            <span class="d">$</span> github
+            <a
+              class="m"
+              href="https://github.com/leomacri468/"
+              target="_blank"
+              rel="noopener"
+              >/leomacri468 ↗</a
+            >
+          </div>
+        </div>
+        <p class="sub rv" style="--d: 2" data-i="cp">
+          Aberto a conversas sobre oportunidades e novos projetos.
+        </p>
+      </section>
+    </main>
+    <footer><span>© 2026 yumi</span><span>front-end → full-stack</span></footer>
+
+    <script>
+      var T = {
+        pt: {
+          n1: "sobre",
+          n2: "projetos",
+          n3: "stack",
+          n4: "contato",
+          eb: "// oi, eu sou",
+          lead: "Front-end hoje. <em>Full-stack amanhã.</em>",
+          sub: "Construo interfaces cuidadosas com TypeScript, JavaScript, HTML e CSS, e estudo Python e PHP para chegar ao back-end.",
+          c1: "ver projetos",
+          c2: "falar comigo",
+          at: "Sites para quem <em>cuida de pessoas.</em>",
+          ap: "Sou a yumi, desenvolvedora front-end no começo da carreira: pego um layout e o transformo em uma interface que funciona bem em qualquer tela. Escrevo TypeScript e JavaScript no dia a dia, cuido de HTML e CSS semânticos e estudo Python e PHP para entender o que acontece do outro lado da tela.",
+          s1t: "Interfaces responsivas",
+          s1p: "Layouts que se adaptam do celular ao desktop, com CSS moderno e código limpo.",
+          s2t: "Acessibilidade",
+          s2p: "HTML semântico, contraste adequado e navegação por teclado.",
+          s3t: "Animações com propósito",
+          s3p: "Transições e microinterações que dão retorno ao usuário sem atrapalhar.",
+          s4t: "TypeScript e JavaScript",
+          s4p: "Lógica de interface tipada e organizada, do formulário ao estado da página.",
+          wt: "Como <em>trabalho.</em>",
+          w1t: "Entender",
+          w1p: "Converso sobre objetivo, público e prazo antes de escrever código.",
+          w2t: "Estruturar",
+          w2p: "Defino conteúdo, hierarquia e layout, começando pelo celular.",
+          w3t: "Construir",
+          w3p: "Desenvolvo por componentes e testo em telas e navegadores diferentes.",
+          w4t: "Entregar",
+          w4p: "Publico, reviso com você e ajusto os detalhes.",
+          pt: "Projetos",
+          p1d: "Projeto de estudo feito para treinar e preencher meu portfólio. Simula o site de um estúdio de Pilates e Treinamento Funcional com turmas de até 4 alunos: modalidades, instrutoras, seis planos e agendamento de aula experimental.",
+          p1e: "Projeto de estudo",
+          p1t: "Página única",
+          p2t: "Institucional",
+          ver: "Ver o site",
+          f1: "Seções: sobre, modalidades, instrutoras, planos e endereço",
+          f2: "Seis planos organizados em três categorias",
+          f3: "Chamada constante para agendar a aula experimental",
+          f4: "Turmas reduzidas como argumento central da página",
+          p2d: "Site institucional para uma advogada que defende os direitos das mulheres. Um manifesto em primeira pessoa, os diferenciais do atendimento e um caminho curto até o WhatsApp.",
+          g1: "Manifesto da advogada em destaque na abertura",
+          g2: "Diferenciais do atendimento em linguagem simples",
+          g3: "Contato direto por WhatsApp, e-mail e Instagram",
+          g4: "Tom acolhedor e sóbrio, com poucos elementos na tela",
+          st: "Minha <em>stack.</em>",
+          sh: "// uso hoje",
+          ss: "// estudando",
+          t1p: "Interfaces responsivas, acessíveis e com movimento usado com critério.",
+          t2p: "Python e PHP: APIs, bancos de dados e a lógica por trás da tela.",
+          t3p: "Ligar as duas pontas e entregar produtos completos, do clique ao banco de dados.",
+          ct: "Vamos conversar.",
+          cp: "Aberto a conversas sobre oportunidades e novos projetos.",
+        },
+        en: {
+          n1: "about",
+          n2: "projects",
+          n3: "stack",
+          n4: "contact",
+          eb: "// hi, I’m",
+          lead: "Front-end today. <em>Full-stack tomorrow.</em>",
+          sub: "I build careful interfaces with TypeScript, JavaScript, HTML and CSS, and I’m learning Python and PHP to move into the back end.",
+          c1: "see projects",
+          c2: "get in touch",
+          at: "Websites for people who <em>care for people.</em>",
+          ap: "I’m yumi, a front-end developer at the start of my career: I take a layout and turn it into an interface that works well on any screen. I write TypeScript and JavaScript every day, care for semantic HTML and CSS, and I’m learning Python and PHP to understand what happens on the other side of the screen.",
+          s1t: "Responsive interfaces",
+          s1p: "Layouts that adapt from phone to desktop, with modern CSS and clean code.",
+          s2t: "Accessibility",
+          s2p: "Semantic HTML, proper contrast and keyboard navigation.",
+          s3t: "Motion with purpose",
+          s3p: "Transitions and micro-interactions that give feedback without getting in the way.",
+          s4t: "TypeScript and JavaScript",
+          s4p: "Typed, organized interface logic, from the form to the page state.",
+          wt: "How I <em>work.</em>",
+          w1t: "Understand",
+          w1p: "I talk through goals, audience and deadline before writing code.",
+          w2t: "Structure",
+          w2p: "I define content, hierarchy and layout, starting from the phone.",
+          w3t: "Build",
+          w3p: "I develop by components and test on different screens and browsers.",
+          w4t: "Deliver",
+          w4p: "I publish, review with you and polish the details.",
+          pt: "Projects",
+          p1d: "A study project made to practice and fill my portfolio. It simulates the website of a Pilates and Functional Training studio with classes of up to 4 students: modalities, instructors, six plans and trial class booking.",
+          p1e: "Study project",
+          p1t: "Single page",
+          p2t: "Corporate",
+          ver: "View the site",
+          f1: "Sections: about, modalities, instructors, plans and address",
+          f2: "Six plans organized in three categories",
+          f3: "A constant call to book the trial class",
+          f4: "Small classes as the page’s central argument",
+          p2d: "A corporate website for a lawyer who defends women’s rights. A first-person manifesto, the strengths of her service and a short path to WhatsApp.",
+          g1: "The lawyer’s manifesto up front",
+          g2: "Service strengths in plain language",
+          g3: "Direct contact by WhatsApp, email and Instagram",
+          g4: "Warm, sober tone with few elements on screen",
+          st: "My <em>stack.</em>",
+          sh: "// using today",
+          ss: "// learning",
+          t1p: "Responsive, accessible interfaces with motion used with judgment.",
+          t2p: "Python and PHP: APIs, databases and the logic behind the screen.",
+          t3p: "Joining both ends and delivering complete products, from the click to the database.",
+          ct: "Let’s talk.",
+          cp: "Open to conversations about opportunities and new projects.",
+        },
+      };
+      var cur = "pt";
+      function apply(l) {
+        cur = l;
+        document.documentElement.lang = l === "pt" ? "pt-BR" : "en";
+        document.querySelectorAll("[data-i]").forEach(function (e) {
+          e.innerHTML = T[l][e.getAttribute("data-i")];
+        });
+        document.getElementById("lang").textContent = l === "pt" ? "EN" : "PT";
+        try {
+          localStorage.setItem("lang", l);
+        } catch (e) {}
+      }
+      document.getElementById("lang").addEventListener("click", function () {
+        apply(cur === "pt" ? "en" : "pt");
+      });
+      try {
+        if (localStorage.getItem("lang") === "en") apply("en");
+      } catch (e) {}
+
+      var rm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var L = [
+        [
+          ["k", "const "],
+          ["p", "dev"],
+          ["d", " = {"],
+        ],
+        [
+          ["d", "  "],
+          ["p", "alias"],
+          ["d", ": "],
+          ["s", '"yumi"'],
+          ["d", ","],
+        ],
+        [
+          ["d", "  "],
+          ["p", "role"],
+          ["d", ": "],
+          ["s", '"front-end"'],
+          ["d", ","],
+        ],
+        [
+          ["d", "  "],
+          ["p", "stack"],
+          ["d", ": ["],
+          ["s", '"TypeScript"'],
+          ["d", ", "],
+          ["s", '"JavaScript"'],
+          ["d", ", "],
+          ["s", '"HTML"'],
+          ["d", ", "],
+          ["s", '"CSS"'],
+          ["d", "],"],
+        ],
+        [
+          ["d", "  "],
+          ["p", "learning"],
+          ["d", ": ["],
+          ["s", '"Python"'],
+          ["d", ", "],
+          ["s", '"PHP"'],
+          ["d", "],"],
+        ],
+        [
+          ["d", "  "],
+          ["p", "next"],
+          ["d", ": "],
+          ["s", '"full-stack"'],
+          ["d", ","],
+        ],
+        [
+          ["d", "  "],
+          ["p", "openToWork"],
+          ["d", ": "],
+          ["r", "true"],
+          ["d", ","],
+        ],
+        [["d", "};"]],
+      ];
+      var pre = document.getElementById("code"),
+        cu = document.createElement("span");
+      cu.className = "cur";
+      function typeCode() {
+        var li = 0,
+          ti = 0,
+          ci = 0,
+          sp = null;
+        pre.textContent = "";
+        (function step() {
+          if (li >= L.length) {
+            pre.appendChild(cu);
+            return;
+          }
+          var tk = L[li][ti];
+          if (!sp || ci === 0) {
+            sp = document.createElement("span");
+            sp.className = tk[0];
+            pre.appendChild(sp);
+          }
+          sp.textContent = tk[1].slice(0, ++ci);
+          pre.appendChild(cu);
+          if (ci >= tk[1].length) {
+            ci = 0;
+            ti++;
+            sp = null;
+            if (ti >= L[li].length) {
+              pre.insertBefore(document.createTextNode("\n"), cu);
+              li++;
+              ti = 0;
+            }
+          }
+          setTimeout(step, 16);
+        })();
+      }
+      function showCode() {
+        pre.textContent = "";
+        L.forEach(function (r, i) {
+          r.forEach(function (t) {
+            var s = document.createElement("span");
+            s.className = t[0];
+            s.textContent = t[1];
+            pre.appendChild(s);
+          });
+          if (i < L.length - 1) pre.appendChild(document.createTextNode("\n"));
+        });
+        pre.appendChild(cu);
+      }
+      if (rm) showCode();
+      else setTimeout(typeCode, 700);
+
+      var io = new IntersectionObserver(
+        function (es) {
+          es.forEach(function (e) {
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.15, rootMargin: "0px 0px -6% 0px" },
+      );
+      document.querySelectorAll(".rv").forEach(function (e) {
+        io.observe(e);
+      });
+
+      var bar = document.getElementById("bar"),
+        git = document.getElementById("git"),
+        ln = git.querySelector(".ln"),
+        tk = false;
+      function prog() {
+        var d = document.documentElement,
+          mx = d.scrollHeight - innerHeight;
+        bar.style.transform =
+          "scaleX(" + (mx > 0 ? Math.min(1, scrollY / mx) : 0) + ")";
+        var b = git.getBoundingClientRect(),
+          p = Math.max(0, Math.min(1, (innerHeight * 0.65 - b.top) / b.height));
+        ln.style.setProperty("--p", p);
+        tk = false;
+      }
+      addEventListener(
+        "scroll",
+        function () {
+          if (!tk) {
+            tk = true;
+            requestAnimationFrame(prog);
+          }
+        },
+        { passive: true },
+      );
+      prog();
+    </script>
+  </body>
+</html>
